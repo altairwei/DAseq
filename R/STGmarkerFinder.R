@@ -40,7 +40,9 @@ STGmarkerFinder <- function(
   lambda = 1.5, n.runs = 5, return.model = T,
   python.use = "/usr/bin/python", GPU = ""
 ){
-  if(!inherits(X, what = "matrix") & !inherits(X, what = "Matrix")){
+  if(!inherits(X, what = "matrix") &
+     !inherits(X, what = "Matrix") &
+     !inherits(X, what = "dgCMatrix")){
     X <- as.matrix(X)
   }
   # set Python
@@ -52,7 +54,7 @@ STGmarkerFinder <- function(
   py_run_string(paste("os.environ['CUDA_VISIBLE_DEVICES'] = '", GPU, "'", sep = ""))
 
   # turn X into Python format
-  X.py <- r_to_py(as.matrix(X))
+  X.py <- r_to_py(X)
 
   # get DA regions to run
   n.da <- length(unique(da.regions$da.region.label)) - 1
@@ -217,7 +219,9 @@ runSTG <- function(
   lambda = 1.5, n.runs = 5, return.model = T,
   python.use = "/usr/bin/python", GPU = ""
 ){
-  if(!inherits(X, what = "matrix") & !inherits(X, what = "Matrix")){
+  if(!inherits(X, what = "matrix") &
+     !inherits(X, what = "Matrix") &
+     !inherits(X, what = "dgCMatrix")){
     X <- as.matrix(X)
   }
   if(is.null(rownames(X))){
@@ -240,7 +244,7 @@ runSTG <- function(
     X.use <- colnames(X)[X.use]
   }
 
-  X.py <- r_to_py(as.matrix(X))
+  X.py <- r_to_py(X)
 
   X.label.bin <- as.numeric(X.labels == label.1)
   X.label.bin.py <- r_to_py(as.matrix(X.label.bin))

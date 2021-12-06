@@ -11,7 +11,7 @@ Required packages: RANN, glmnet, caret, Seurat, e1071, reticulate, ggplot2, cowp
 ## Python Dependencies
 Python 3 or above ([Miniconda](https://docs.conda.io/en/latest/miniconda.html) is recommended.)
 
-Required modules: numpy, pandas, sklearn, tensorflow, keras
+Required modules: numpy, pandas, scipy, sklearn, tensorflow, keras
 
 
 ## Installation
