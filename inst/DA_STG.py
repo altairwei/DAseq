@@ -6,7 +6,7 @@ else:
   import tensorflow as tf
 import os
 from sklearn.model_selection import train_test_split
-
+from scipy.sparse import csc_matrix
 
 
 def STG_FS(X_in,Y_in,num_runs=10,lam=1):
@@ -17,6 +17,9 @@ def STG_FS(X_in,Y_in,num_runs=10,lam=1):
     sum_c=np.sum(X_in[:,np.where(Y_in==1)[0]],axis=1)
     top_gene_indices=np.array(np.argsort(sum_c,axis=0)[::-1][:2000]).reshape(-1)
     X_short=X_in[top_gene_indices,:].T
+
+    if isinstance(X_short, csc_matrix):
+        X_short = X_short.toarray()
 
     #Normalize the data
     X_short/=X_short.max()
@@ -472,6 +475,7 @@ def convertToOneHot(vector, num_classes=None):
     result = np.zeros(shape=(len(vector), num_classes))
     result[np.arange(len(vector)), vector] = 1
     return result.astype(int)
+
 def balanced_subsample(x,y,subsample_size=1.0):
 
     class_xs = []
