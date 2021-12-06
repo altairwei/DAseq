@@ -6,7 +6,7 @@ else:
   import tensorflow as tf
 import os
 from sklearn.model_selection import train_test_split
-from scipy.sparse import csc_matrix
+from scipy.sparse import csr_matrix
 
 
 def STG_FS(X_in,Y_in,num_runs=10,lam=1):
@@ -18,7 +18,7 @@ def STG_FS(X_in,Y_in,num_runs=10,lam=1):
     top_gene_indices=np.array(np.argsort(sum_c,axis=0)[::-1][:2000]).reshape(-1)
     X_short=X_in[top_gene_indices,:].T
 
-    if isinstance(X_short, csc_matrix):
+    if isinstance(X_short, csr_matrix):
         X_short = X_short.toarray()
 
     #Normalize the data
